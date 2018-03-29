@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class MainPage extends AbstractPage {
 
@@ -24,16 +22,18 @@ public class MainPage extends AbstractPage {
     }
 
     public boolean mainPageCorrectLoad() {
-        return Utils.isElementPresent(logo);
+        return isElementPresent(logo);
     }
 
-    public void openAllShowsPageThroughRollMenu() {
+    public ShowsPage openAllShowsPageThroughRollMenu() {
         Actions action = new Actions(driver);
         action.moveToElement(showsButton).build().perform();
         showAllShowsButton.click();
+        return new ShowsPage(driver);
     }
 
-    public void openAllShows() {
+    public ShowsPage openAllShows() {
         showsButton.click();
+        return new ShowsPage(driver);
     }
 }

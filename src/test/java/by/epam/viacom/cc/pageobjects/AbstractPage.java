@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class AbstractPage {
 
     WebDriver driver;
@@ -15,7 +17,16 @@ public class AbstractPage {
 
     public AbstractPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        //wait = new WebDriverWait(driver, 10);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
+    }
+
+    public boolean isElementPresent(WebElement element) {
+        try {
+            return element.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }
