@@ -10,19 +10,20 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
     private static final String CHROME_DRIVER = "D:/DATA/chromedriver.exe";
 
-//    private DriverFactory() {}
-//
-//    public static WebDriver getWebdriver(String browser) {
-//        if (driver == null) {
-//            driver = new DriverFactory().selectDriver(browser);
-//        }
-//        return driver;
-//
-//    }
+    private DriverFactory() {
+    }
+
+    public static WebDriver getWebdriver(String browser) {
+        if (driver == null) {
+            driver = new DriverFactory().selectDriver(browser);
+        }
+        return driver;
+
+    }
 
     public WebDriver selectDriver(String browser) {
         switch (browser) {
@@ -38,6 +39,13 @@ public class DriverFactory {
                 break;
         }
         return driver;
+    }
+
+    public static void closeWebBrowser() {
+        if (null != driver) {
+            driver.quit();
+        }
+        driver = null;
     }
 
 }

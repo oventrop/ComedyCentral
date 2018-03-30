@@ -22,7 +22,7 @@ public class SimpleTest {
     @Parameters({"browser"})
     @BeforeClass
     public void startTest(String browser) {
-        driver = new DriverFactory().selectDriver(browser);
+        driver = DriverFactory.getWebdriver(browser);
         driver.manage().window().maximize();
         driver.get(URL);
     }
@@ -30,19 +30,21 @@ public class SimpleTest {
     @Test
     public void playerPageCorrectLoad() {
         MainPage mainPage = new MainPage(driver);
-        //    Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
+        Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
+
         ShowsPage showsPage = mainPage.openAllShows();
-        //    Assert.assertTrue(driver.getCurrentUrl().equals("http://www.cc.com/shows"), "Not SHOWS page loaded");
+        Assert.assertTrue(driver.getCurrentUrl().equals("http://www.cc.com/shows"), "Not SHOWS page loaded");
+
         ToshShowsPage toshShowsPage = showsPage.openTosh0Show();
-        //    Assert.assertTrue(toshShowsPage.toshPageCorrectLoad(), "Not TOSHSHOW page loaded");
+        Assert.assertTrue(toshShowsPage.toshPageCorrectLoad(), "Not TOSHSHOW page loaded");
+
         ToshShowVideoPlayer player = toshShowsPage.openFirstShow();
         Assert.assertTrue(player.playerPageCorrectLoad(), "Not PLAYER page loaded");
     }
 
 
     @AfterClass(description = "Close browser")
-    public void closeBrowser() throws InterruptedException {
-        Thread.sleep(3000);
-        driver.quit();
+    public void closeBrowser() {
+        DriverFactory.closeWebBrowser();
     }
 }
