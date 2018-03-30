@@ -31,7 +31,8 @@ public class SimpleTest {
     public void playerPageCorrectLoad() {
         MainPage mainPage = new MainPage(driver);
         System.out.println(driver.getTitle());
-        Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
+        //   Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
+        Assert.assertTrue(false);
 
         ShowsPage showsPage = mainPage.openAllShows();
         Assert.assertTrue(driver.getCurrentUrl().equals("http://www.cc.com/shows"), "Not SHOWS page loaded");
@@ -41,6 +42,7 @@ public class SimpleTest {
 
         ToshShowVideoPlayer player = toshShowsPage.openFirstShow();
         Assert.assertTrue(player.playerPageCorrectLoad(), "Not PLAYER page loaded");
+
 
         player.waitUntilPlayingStarted();
         System.out.println("Playing started!");
