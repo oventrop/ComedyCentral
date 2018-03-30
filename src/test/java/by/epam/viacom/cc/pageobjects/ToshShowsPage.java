@@ -20,7 +20,8 @@ public class ToshShowsPage extends AbstractPage {
     List<WebElement> shows;
 
     public boolean toshPageCorrectLoad() {
-        return isElementPresent(toshShowTitleElement);
+       isElementPresent(toshShowTitleElement);
+      return driver.getTitle().matches("^.*Tosh\\.0.*$");
     }
 
     public ToshShowVideoPlayer openFirstShow() {

@@ -23,7 +23,7 @@ public class MainPage extends AbstractPage {
 
     public boolean mainPageCorrectLoad() {
         return isElementPresent(logo);
-    }
+            }
 
     public ShowsPage openAllShowsPageThroughRollMenu() {
         Actions action = new Actions(driver);

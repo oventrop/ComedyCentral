@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AbstractPage {
 
@@ -24,9 +26,15 @@ public class AbstractPage {
 
     public boolean isElementPresent(WebElement element) {
         try {
-            return element.isEnabled();
+            return element.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public static boolean checkWithRegExp(String header) {
+        Pattern p = Pattern.compile("^[a-z0-9_-]{3,15}$");
+        Matcher m = p.matcher(header);
+        return m.matches();
     }
 }

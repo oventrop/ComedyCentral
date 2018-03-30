@@ -22,7 +22,7 @@ public class SimpleTest {
     @Parameters({"browser"})
     @BeforeClass
     public void startTest(String browser) {
-        driver = DriverFactory.getWebdriver(browser);
+        driver = new DriverFactory().selectDriver(browser);
         driver.manage().window().maximize();
         driver.get(URL);
     }
@@ -30,6 +30,7 @@ public class SimpleTest {
     @Test
     public void playerPageCorrectLoad() {
         MainPage mainPage = new MainPage(driver);
+        System.out.println(driver.getTitle());
         Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
 
         ShowsPage showsPage = mainPage.openAllShows();
@@ -40,11 +41,22 @@ public class SimpleTest {
 
         ToshShowVideoPlayer player = toshShowsPage.openFirstShow();
         Assert.assertTrue(player.playerPageCorrectLoad(), "Not PLAYER page loaded");
+
+        player.waitUntilPlayingStarted();
+        System.out.println("Playing started!");
+
+        player.playPauseVideo();
+        player.rewindVideo(500);
+        player.fulscreenVideo();
+        Assert.assertTrue(player.isVideoFullScreen(), "Video is not fullScreen");
+
     }
 
 
     @AfterClass(description = "Close browser")
-    public void closeBrowser() {
-        DriverFactory.closeWebBrowser();
+    public void closeBrowser() throws InterruptedException {
+        Thread.sleep(3000);
+        driver.quit();
+        //DriverFactory.closeWebBrowser();
     }
 }

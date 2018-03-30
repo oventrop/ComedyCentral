@@ -17,7 +17,7 @@ public class ShowsPage extends AbstractPage {
     }
 
     @FindBy(xpath = "//h3[text() = 'Tosh.0' ]")
-    WebElement toshShowButton;
+    private WebElement toshShowButton;
 
 
     public ToshShowsPage openTosh0Show() {
