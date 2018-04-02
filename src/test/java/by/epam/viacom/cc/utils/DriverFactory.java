@@ -18,8 +18,8 @@ public class DriverFactory {
         switch (browser) {
             case "firefox":
                 System.setProperty("webdriver.gecko.driver", GECKO_DRIVER);
-                FirefoxOptions options = new FirefoxOptions();
-                driver = new FirefoxDriver(options);
+                FirefoxOptions ffoptions = new FirefoxOptions();
+                driver = new FirefoxDriver(ffoptions);
                 break;
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);

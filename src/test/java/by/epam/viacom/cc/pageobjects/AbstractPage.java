@@ -31,10 +31,9 @@ public class AbstractPage {
             return false;
         }
     }
-
-    public static boolean checkWithRegExp(String header) {
-        Pattern p = Pattern.compile("^[a-z0-9_-]{3,15}$");
-        Matcher m = p.matcher(header);
-        return m.matches();
-    }
+//    public static boolean checkWithRegExp(String header) {
+//        Pattern p = Pattern.compile("^[a-z0-9_-]{3,15}$");
+//        Matcher m = p.matcher(header);
+//        return m.matches();
+//    }
 }

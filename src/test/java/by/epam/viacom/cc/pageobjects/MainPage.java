@@ -21,9 +21,9 @@ public class MainPage extends AbstractPage {
         super(driver);
     }
 
-    public boolean mainPageCorrectLoad() {
+    public boolean isMainPageLoaded() {
         return isElementPresent(logo);
-            }
+    }
 
     public ShowsPage openAllShowsPageThroughRollMenu() {
         Actions action = new Actions(driver);

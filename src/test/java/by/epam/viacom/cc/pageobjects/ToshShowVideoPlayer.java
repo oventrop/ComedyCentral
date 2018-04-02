@@ -60,10 +60,11 @@ public class ToshShowVideoPlayer extends AbstractPage {
         actions.moveByOffset(0,0);
         actions.moveToElement(playerContainer).build().perform();
         actions.moveToElement(progressBar).moveByOffset(xOffset, 0).click().build().perform();
+        System.out.println(progressBar.getSize());
         return new ToshShowVideoPlayer(driver);
     }
 
-    public ToshShowVideoPlayer fulscreenVideo() {
+    public ToshShowVideoPlayer switchPlayerToFullScreen() {
         Actions actions = new Actions(driver);
         actions.moveByOffset(0,0);
         actions.moveToElement(playerContainer).build().perform();

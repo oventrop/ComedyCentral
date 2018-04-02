@@ -19,9 +19,9 @@ public class ToshShowsPage extends AbstractPage {
     @FindBy(xpath = "//span[@class='title']")
     List<WebElement> shows;
 
-    public boolean toshPageCorrectLoad() {
-       isElementPresent(toshShowTitleElement);
-      return driver.getTitle().matches("^.*Tosh\\.0.*$");
+    public boolean isToshShowPageLoaded() {
+       return isElementPresent(toshShowTitleElement);
+     // return driver.getTitle().matches("^.*Tosh\\.0.*$");
     }
 
     public ToshShowVideoPlayer openFirstShow() {

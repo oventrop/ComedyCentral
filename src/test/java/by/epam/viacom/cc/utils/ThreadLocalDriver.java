@@ -16,9 +16,9 @@ public class ThreadLocalDriver {
         return webDriver.get();
     }
 
-    public static void setWebDriver(String browser) {
+    public static void setWebDriver(WebDriver driver) {
         if (webDriver.get() == null) {
-            webDriver.set(new DriverFactory().selectDriver(browser));
+            webDriver.set(driver);
         }
     }
 }

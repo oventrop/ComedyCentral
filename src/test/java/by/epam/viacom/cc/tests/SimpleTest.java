@@ -7,8 +7,6 @@ import by.epam.viacom.cc.pageobjects.ToshShowsPage;
 import by.epam.viacom.cc.utils.DriverFactory;
 import by.epam.viacom.cc.utils.ThreadLocalDriver;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -23,8 +21,8 @@ public class SimpleTest {
     @Parameters({"browser"})
     @BeforeClass
     public void startTest(String browser) {
-//        driver = new DriverFactory().selectDriver(browser);
-        ThreadLocalDriver.setWebDriver(browser);
+        driver = new DriverFactory().selectDriver(browser);
+        ThreadLocalDriver.setWebDriver(driver);
         driver = ThreadLocalDriver.getDriver();
         driver.manage().window().maximize();
         driver.get(URL);
@@ -34,14 +32,14 @@ public class SimpleTest {
     public void playerPageCorrectLoad() {
         MainPage mainPage = new MainPage(driver);
         System.out.println(driver.getTitle());
-        Assert.assertTrue(mainPage.mainPageCorrectLoad(), "Not MAIN page loaded");
+        Assert.assertTrue(mainPage.isMainPageLoaded(), "Not MAIN page loaded");
         //   Assert.assertTrue(false);
 
         ShowsPage showsPage = mainPage.openAllShows();
         Assert.assertTrue(driver.getCurrentUrl().equals("http://www.cc.com/shows"), "Not SHOWS page loaded");
 
         ToshShowsPage toshShowsPage = showsPage.openTosh0Show();
-        Assert.assertTrue(toshShowsPage.toshPageCorrectLoad(), "Not TOSHSHOW page loaded");
+        Assert.assertTrue(toshShowsPage.isToshShowPageLoaded(), "Not TOSHSHOW page loaded");
 
         ToshShowVideoPlayer player = toshShowsPage.openFirstShow();
         Assert.assertTrue(player.playerPageCorrectLoad(), "Not PLAYER page loaded");
@@ -52,7 +50,7 @@ public class SimpleTest {
 
         player.playPauseVideo();
         player.rewindVideo(500);
-        player.fulscreenVideo();
+        player.switchPlayerToFullScreen();
         Assert.assertTrue(player.isVideoFullScreen(), "Video is not fullScreen");
 
     }
