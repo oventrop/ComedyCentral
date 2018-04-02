@@ -14,16 +14,6 @@ public class DriverFactory {
     private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
     private static final String CHROME_DRIVER = "D:/DATA/chromedriver.exe";
 
-//    private DriverFactory() {
-//    }
-//
-//    public static WebDriver getWebdriver(String browser) {
-//        if (driver == null) {
-//            driver = new DriverFactory().selectDriver(browser);
-//        }
-//        return driver;
-
-
     public WebDriver selectDriver(String browser) {
         switch (browser) {
             case "firefox":
@@ -39,12 +29,4 @@ public class DriverFactory {
         }
         return driver;
     }
-
-//    public static void closeWebBrowser() {
-//        if (null != driver) {
-//            driver.quit();
-//        }
-//        driver = null;
-//    }
-
 }

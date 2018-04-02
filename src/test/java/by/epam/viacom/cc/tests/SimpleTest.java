@@ -5,6 +5,7 @@ import by.epam.viacom.cc.pageobjects.ShowsPage;
 import by.epam.viacom.cc.pageobjects.ToshShowVideoPlayer;
 import by.epam.viacom.cc.pageobjects.ToshShowsPage;
 import by.epam.viacom.cc.utils.DriverFactory;
+import by.epam.viacom.cc.utils.ThreadLocalDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -22,7 +23,9 @@ public class SimpleTest {
     @Parameters({"browser"})
     @BeforeClass
     public void startTest(String browser) {
-        driver = new DriverFactory().selectDriver(browser);
+//        driver = new DriverFactory().selectDriver(browser);
+        ThreadLocalDriver.setWebDriver(browser);
+        driver = ThreadLocalDriver.getDriver();
         driver.manage().window().maximize();
         driver.get(URL);
     }
