@@ -10,9 +10,15 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
     private static final String CHROME_DRIVER = "D:/DATA/chromedriver.exe";
+
+    private DriverFactory() {}
+
+    public static WebDriver getDriver(String browser) {
+        return new DriverFactory().selectDriver(browser);
+    }
 
     public WebDriver selectDriver(String browser) {
         switch (browser) {

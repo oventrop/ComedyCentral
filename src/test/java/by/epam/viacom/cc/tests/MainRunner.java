@@ -17,9 +17,9 @@ public class MainRunner {
     public static void main(String[] args) throws IOException {
         String file = "testng.xml";
         SuiteXmlParser parser = new SuiteXmlParser();
-        XmlSuite suite = parser.parse( file, new FileInputStream(file), true);;
+        XmlSuite suite = parser.parse(file, new FileInputStream(file), true);
 
-        List<XmlSuite> suitesList= new ArrayList<>();
+        List<XmlSuite> suitesList = new ArrayList<>();
         suitesList.add(suite);
         TestNG tng = new TestNG();
         tng.setXmlSuites(suitesList);

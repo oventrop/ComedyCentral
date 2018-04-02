@@ -13,20 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class SimpleTest {
-
-    WebDriver driver;
-    private static final String URL = "https://www.cc.com";
-
-    @Parameters({"browser"})
-    @BeforeClass
-    public void startTest(String browser) {
-        driver = new DriverFactory().selectDriver(browser);
-        ThreadLocalDriver.setWebDriver(driver);
-        driver = ThreadLocalDriver.getDriver();
-        driver.manage().window().maximize();
-        driver.get(URL);
-    }
+public class SimpleTest extends BaseTest{
 
     @Test
     public void playerPageCorrectLoad() {
@@ -49,17 +36,12 @@ public class SimpleTest {
         System.out.println("Playing started!");
 
         player.playPauseVideo();
-        player.rewindVideo(500);
+        player.rewindVideoToPercents(101);
         player.switchPlayerToFullScreen();
         Assert.assertTrue(player.isVideoFullScreen(), "Video is not fullScreen");
 
     }
 
 
-    @AfterClass(description = "Close browser")
-    public void closeBrowser() throws InterruptedException {
-        Thread.sleep(3000);
-        driver.quit();
-        //DriverFactory.closeWebBrowser();
-    }
+
 }
