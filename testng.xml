@@ -7,13 +7,13 @@
     <!--<test name="FirefoxTest">-->
         <!--<parameter name="browser" value="firefox"/>-->
         <!--<classes>-->
-            <!--<class name="by.epam.viacom.cc.tests.SimpleTest"/>-->
+            <!--<class name="by.epam.viacom.SimpleTest"/>-->
         <!--</classes>-->
     <!--</test>-->
     <!--<test name="ChromeTest">-->
         <!--<parameter name="browser" value="chrome"/>-->
         <!--<classes>-->
-            <!--<class name="by.epam.viacom.cc.tests.SimpleTest"/>-->
+            <!--<class name="by.epam.viacom.SimpleTest"/>-->
         <!--</classes>-->
     <!--</test>-->
     <test name="RewindChromeTest">
