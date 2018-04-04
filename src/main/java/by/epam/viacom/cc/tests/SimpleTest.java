@@ -7,14 +7,13 @@ import by.epam.viacom.cc.pageobjects.ToshShowsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class SimpleTest extends BaseTest{
+public class SimpleTest extends BaseTest {
 
     @Test
     public void playerPageCorrectLoad() {
         MainPage mainPage = new MainPage(driver);
         System.out.println(driver.getTitle());
         Assert.assertTrue(mainPage.isMainPageLoaded(), "Not MAIN page loaded");
-        //   Assert.assertTrue(false);
 
         ShowsPage showsPage = mainPage.openAllShows();
         Assert.assertTrue(driver.getCurrentUrl().equals("http://www.cc.com/shows"), "Not SHOWS page loaded");
@@ -25,17 +24,12 @@ public class SimpleTest extends BaseTest{
         ToshShowVideoPlayer player = toshShowsPage.openFirstShow();
         Assert.assertTrue(player.playerPageCorrectLoad(), "Not PLAYER page loaded");
 
-
         player.waitUntilPlayingStarted();
         System.out.println("Playing started!");
 
-        player.playPauseVideo();
-        player.rewindVideoToPercents(101);
+       // player.playPauseVideo();
+        player.rewindVideoToPercents(50);
         player.switchPlayerToFullScreen();
         Assert.assertTrue(player.isVideoFullScreen(), "Video is not fullScreen");
-
     }
-
-
-
 }

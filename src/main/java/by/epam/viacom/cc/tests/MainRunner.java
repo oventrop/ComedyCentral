@@ -12,10 +12,10 @@ import java.util.List;
 
 public class MainRunner {
     public static void main(String[] args) {
-        String file = "D:/WORKSPACE/ComedyCentral/testng.xml";
+        String file = "testng.xml";
         SuiteXmlParser parser = new SuiteXmlParser();
         XmlSuite suite = null;
-           try {
+        try {
             suite = parser.parse(file, new FileInputStream(file), true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

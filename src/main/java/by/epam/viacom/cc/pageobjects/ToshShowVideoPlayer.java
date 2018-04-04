@@ -11,9 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+
 
 public class ToshShowVideoPlayer extends AbstractPage {
 
@@ -48,14 +47,14 @@ public class ToshShowVideoPlayer extends AbstractPage {
     }
 
     public ToshShowVideoPlayer waitUntilPlayingStarted() {
-        Wait wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(15)).pollingEvery(Duration.ofSeconds(15)).ignoring(NoSuchElementException.class);
-        wait.until(ExpectedConditions.elementToBeClickable(playButton));
+        FluentWait wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(15)).pollingEvery(Duration.ofSeconds(1)).ignoring(NoSuchElementException.class);
+     //   wait.until(ExpectedConditions.elementToBeClickable(playButton));
         return new ToshShowVideoPlayer(driver);
     }
 
     public ToshShowVideoPlayer playPauseVideo() {
         Actions actions = new Actions(driver);
-        actions.moveByOffset(0, 0);
+        actions.moveToElement(pageLogo).build().perform();
         actions.moveToElement(playerContainer).build().perform();
         playButton.click();
         return new ToshShowVideoPlayer(driver);
@@ -69,6 +68,8 @@ public class ToshShowVideoPlayer extends AbstractPage {
         int progressBarLength = progressBar.getSize().width;
         System.out.println(progressBarLength);
         int rewindPosition = (progressBarLength * position) / 100;
+        actions.moveToElement(pageLogo).build().perform();
+        actions.moveToElement(playerContainer).build().perform();
         if (driver instanceof FirefoxDriver) {
             actions.moveToElement(progressBar, (-progressBarLength / 2), 0).build().perform();
         } else if (driver instanceof ChromeDriver) {
@@ -85,7 +86,7 @@ public class ToshShowVideoPlayer extends AbstractPage {
 
     public ToshShowVideoPlayer switchPlayerToFullScreen() {
         Actions actions = new Actions(driver);
-        actions.moveByOffset(0, 0);
+        actions.moveToElement(pageLogo).build().perform();
         actions.moveToElement(playerContainer).build().perform();
         actions.moveToElement(fullscreenButton).click().build().perform();
         return new ToshShowVideoPlayer(driver);

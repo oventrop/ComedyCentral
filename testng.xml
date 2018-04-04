@@ -17,9 +17,9 @@
         <!--</classes>-->
     <!--</test>-->
     <test name="RewindTest">
-        <parameter name="browser" value="chrome"/>
+        <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="by.epam.viacom.cc.tests.ProxyTest"/>
+            <class name="by.epam.viacom.cc.tests.SimpleEmptyTest"/>
         </classes>
     </test>
 </suite>

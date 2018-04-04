@@ -34,7 +34,7 @@ public class Listener implements ITestListener, ISuiteListener {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd, hh.mm ss");
             BufferedImage image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            ImageIO.write(image, "jpg", new File("D:/SCREENSHOTS/"+formatter.format(calendar.getTime())+".jpg"));
+            ImageIO.write(image, "jpg", new File("screenshots/"+formatter.format(calendar.getTime())+".jpg"));
         } catch (IOException | AWTException e) {
             e.printStackTrace();
         }
