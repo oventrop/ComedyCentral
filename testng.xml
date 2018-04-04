@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite1" parallel="tests">
+<suite name="Suite1">
     <listeners>
         <listener class-name="by.epam.viacom.cc.utils.Listener"/>
     </listeners>
@@ -16,10 +16,10 @@
             <!--<class name="by.epam.viacom.SimpleTest"/>-->
         <!--</classes>-->
     <!--</test>-->
-    <test name="RewindChromeTest">
-        <parameter name="browser" value="firefox"/>
+    <test name="RewindTest">
+        <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="by.epam.viacom.cc.tests.PlayerRewindTest"/>
+            <class name="by.epam.viacom.cc.tests.ProxyTest"/>
         </classes>
     </test>
 </suite>
