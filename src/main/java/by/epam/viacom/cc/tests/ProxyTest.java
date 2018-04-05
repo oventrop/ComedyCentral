@@ -5,13 +5,11 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
-import net.lightbody.bmp.core.har.HarNameValuePair;
 import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.interactions.SourceType;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,17 +17,15 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class ProxyTest {
 
-    WebDriver driver;
+    private WebDriver driver;
+    private Har har;
     private BrowserMobProxy proxyServer;
     private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
+    private static final String PLAYER_URL = "http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot";
+    private static final String HAR_PATH = "D:/Test.har";
 
     @BeforeClass(description = "server start")
     public void startServer() {
@@ -48,38 +44,45 @@ public class ProxyTest {
         driver = new FirefoxDriver(options);
     }
 
-    @Test
-    public void proxyServerTest() {
+    @BeforeClass(dependsOnMethods = "startBrowser")
+    public void harInitialize() {
         proxyServer.newHar("cc.com");
-        driver.get("http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot");
-        Har har = proxyServer.getHar();
-
+        driver.get(PLAYER_URL);
+        har = proxyServer.getHar();
         try {
-            har.writeTo(new File("D:/Test.har"));
+            har.writeTo(new File(HAR_PATH));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void proxyRequestTest() {
         Boolean flag = false;
         for (HarEntry entry : har.getLog().getEntries()) {
             if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
                 System.out.println(entry.getResponse().getStatus());
-                Assert.assertEquals(entry.getResponse().getStatus(), 200);
-            }
-
-            String s = entry.getResponse().getContent().getText();
-            if (s != null) {
-                if (s.contains("timeSinceLastAd\":80000")) {
-                    System.out.println("Found!");
-                    flag = true;
-                }
+                flag = (entry.getResponse().getStatus() == 200);
+                break;
             }
         }
+        Assert.assertTrue(flag);
+    }
 
+    @Test
+    public void proxyResponceTest() {
+        Boolean flag = false;
+        for (HarEntry entry : har.getLog().getEntries()) {
+            String s = entry.getResponse().getContent().getText();
+            if (s != null && s.contains("\"timeSinceLastAd\":80000")) {
+                flag = true;
+                break;
+            }
+        }
         Assert.assertTrue(flag, "Text not found!");
     }
 
-    @AfterClass(description = "Close browser")
+    @AfterClass(description = "Close browser, stop server")
     public void closeBrowser() {
         driver.quit();
         proxyServer.stop();
