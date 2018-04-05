@@ -3,9 +3,7 @@ package by.epam.viacom.cc.tests;
 import by.epam.viacom.cc.utils.DriverFactory;
 import by.epam.viacom.cc.utils.ThreadLocalDriver;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 public class BaseTest {
     WebDriver driver;
@@ -23,7 +21,7 @@ public class BaseTest {
 
     @AfterClass(description = "Close browser")
     public void closeBrowser() throws InterruptedException {
-        Thread.sleep(2000);
         driver.quit();
+        ThreadLocalDriver.removeDriverThread();
     }
 }
