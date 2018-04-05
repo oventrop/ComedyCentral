@@ -19,7 +19,7 @@
     <test name="RewindTest">
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="by.epam.viacom.cc.tests.SimpleEmptyTest"/>
+            <class name="by.epam.viacom.cc.tests.ProxyTest"/>
         </classes>
     </test>
 </suite>
