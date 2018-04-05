@@ -57,30 +57,19 @@ public class ProxyTest {
     }
 
     @Test
-    public void proxyRequestTest() {
+    public void proxyRequestResponceTest() {
         Boolean flag = false;
         for (HarEntry entry : har.getLog().getEntries()) {
             if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
                 System.out.println(entry.getResponse().getStatus());
-                flag = (entry.getResponse().getStatus() == 200);
+                String s = entry.getResponse().getContent().getText();
+                flag = (entry.getResponse().getStatus() == 200 && s != null && s.contains("\"timeSinceLastAd\":80000"));
                 break;
             }
         }
         Assert.assertTrue(flag);
     }
 
-    @Test
-    public void proxyResponceTest() {
-        Boolean flag = false;
-        for (HarEntry entry : har.getLog().getEntries()) {
-            String s = entry.getResponse().getContent().getText();
-            if (s != null && s.contains("\"timeSinceLastAd\":80000")) {
-                flag = true;
-                break;
-            }
-        }
-        Assert.assertTrue(flag, "Text not found!");
-    }
 
     @AfterClass(description = "Close browser, stop server")
     public void closeBrowser() {
