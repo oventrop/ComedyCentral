@@ -15,9 +15,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.io.IOException;
-
 public class ProxyTest {
 
     private WebDriver driver;
@@ -25,9 +22,8 @@ public class ProxyTest {
     private BrowserMobProxy proxyServer;
     private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
     private static final String PLAYER_URL = "http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot";
-    private static final String HAR_PATH = "D:/Test.har";
 
-    @BeforeClass(description = "server start")
+    @BeforeClass(description = "start proxy server")
     public void startServer() {
         proxyServer = new BrowserMobProxyServer();
         proxyServer.start(4444);
@@ -44,24 +40,14 @@ public class ProxyTest {
         driver = new FirefoxDriver(options);
     }
 
-    @BeforeClass(dependsOnMethods = "startBrowser")
-    public void harInitialize() {
+    @Test
+    public void proxyRequestResponceTest() {
         proxyServer.newHar("cc.com");
         driver.get(PLAYER_URL);
         har = proxyServer.getHar();
-        try {
-            har.writeTo(new File(HAR_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void proxyRequestResponceTest() {
         Boolean flag = false;
         for (HarEntry entry : har.getLog().getEntries()) {
             if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
-                System.out.println(entry.getResponse().getStatus());
                 String s = entry.getResponse().getContent().getText();
                 flag = (entry.getResponse().getStatus() == 200 && s != null && s.contains("\"timeSinceLastAd\":80000"));
                 break;
@@ -69,7 +55,6 @@ public class ProxyTest {
         }
         Assert.assertTrue(flag);
     }
-
 
     @AfterClass(description = "Close browser, stop server")
     public void closeBrowser() {
