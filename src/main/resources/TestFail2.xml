@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testParams name = "suite1">
+    <adServer>freewheel</adServer>
+    <adsEnabled>true</adsEnabled>
+    <amazonEnabled>true</amazonEnabled>
+    <freewheelNetworkID>82125</freewheelNetworkID>
+</testParams>

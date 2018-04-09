@@ -1,6 +1,6 @@
 test-output/
 target/
-
+screenshots/
 .classpath
 .project
 .settings

@@ -5,13 +5,6 @@ import java.io.*;
 
 public class JaxbUtils {
 
-    public static void main(String[] args) {
-
-        new JaxbUtils().buildXML();
-        new JaxbUtils().parseXML("TestParams.xml");
-    }
-
-
     public void buildXML() {
 
         TestParams test = new TestParams();
@@ -32,6 +25,7 @@ public class JaxbUtils {
         }
     }
 
+
     public TestParams parseXML(String path) {
         TestParams test = new TestParams();
         try {
@@ -46,20 +40,5 @@ public class JaxbUtils {
             e.printStackTrace();
         }
         return test;
-    }
-
-    public static void parseHar() {
-        try {
-            InputStream is = new FileInputStream("TestParams.xml");
-            JAXBContext context = JAXBContext.newInstance(TestParams.class);
-            Unmarshaller um = context.createUnmarshaller();
-            TestParams test = (TestParams) um.unmarshal(is);
-            System.out.println(test.toString());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -2,6 +2,7 @@ package by.epam.viacom.cc.tests;
 
 
 import by.epam.viacom.cc.jaxb.JaxbUtils;
+import by.epam.viacom.cc.jaxb.ProxyTestDataProvider;
 import by.epam.viacom.cc.jaxb.TestParams;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
@@ -15,7 +16,9 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class ProxyTest {
 
@@ -24,7 +27,7 @@ public class ProxyTest {
     private BrowserMobProxy proxyServer;
     private static final String GECKO_DRIVER = "geckodriver";
     private static final String PLAYER_URL = "http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot";
-    private static final String TEST_PARAMS_XML = "TestParams.xml";
+   // private static final String TEST_PARAMS_XML = "TestPass1.xml";
 
     @BeforeClass(description = "start proxy server")
     public void startServer() {
@@ -43,49 +46,51 @@ public class ProxyTest {
         driver = new FirefoxDriver(options);
     }
 
-    @Test
-    public void proxyRequestResponceTest() {
+//    @Test
+//    public void proxyRequestResponceTest() {
+//        proxyServer.newHar("cc.com");
+//        driver.get(PLAYER_URL);
+//        har = proxyServer.getHar();
+//        Boolean flag = false;
+//        for (HarEntry entry : har.getLog().getEntries()) {
+//
+//            if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
+//                String s = entry.getResponse().getContent().getText();
+//                flag = (entry.getResponse().getStatus() == 200 && s != null && s.contains("\"timeSinceLastAd\":80000"));
+//                //System.out.println(s);
+//                break;
+//            }
+//        }
+//        Assert.assertTrue(flag);
+//    }
+
+    @Test(dataProvider = "XmlDataProvider", dataProviderClass = ProxyTestDataProvider.class)
+    public void proxyJaxbSampleTest(String xmlSuite) {
         proxyServer.newHar("cc.com");
         driver.get(PLAYER_URL);
         har = proxyServer.getHar();
-        Boolean flag = false;
-        for (HarEntry entry : har.getLog().getEntries()) {
-
-            if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
-                String s = entry.getResponse().getContent().getText();
-                flag = (entry.getResponse().getStatus() == 200 && s != null && s.contains("\"timeSinceLastAd\":80000"));
-                //System.out.println(s);
-                break;
-            }
-        }
-        Assert.assertTrue(flag);
-    }
-
-    @Test
-    public void proxyJaxbSampleTest() {
-        proxyServer.newHar("cc.com");
-        driver.get(PLAYER_URL);
-        har = proxyServer.getHar();
-        Boolean flag = false;
-
-        new JaxbUtils().buildXML();
+        String responce = "";
+        int status=0;
 
         for (HarEntry entry : har.getLog().getEntries()) {
             if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
-                String s = entry.getResponse().getContent().getText();
-                TestParams params = new JaxbUtils().parseXML(TEST_PARAMS_XML);
-
-                flag = (entry.getResponse().getStatus() == 200
-                        && s != null
-                        && s.contains("\"adServer\":\"" + params.getAdServer() + "\"")
-                        && s.contains("\"adsEnabled\":" + params.isAdsEnabled())
-                        && s.contains("\"freewheelNetworkID\":\"" + params.getFreewheelNetworkID() + "\"")
-                        && s.contains("\"amazonEnabled\":" + params.isAmazonEnabled())
-                );
+                responce = entry.getResponse().getContent().getText();
+                status = entry.getResponse().getStatus();
                 break;
-            }
+            }//add softAsserts, 4 xml suits, params out of main class, suit передать в сигнатуру тества
         }
-        Assert.assertTrue(flag);
+
+        TestParams params = new JaxbUtils().parseXML(xmlSuite);
+
+        SoftAssert assertion = new SoftAssert();
+        assertion.assertEquals(status, 200);
+        assertion.assertNotNull(responce);
+        assertion.assertTrue(responce.contains("\"adServer\":\"" + params.getAdServer() + "\""));
+        assertion.assertTrue(responce.contains("\"adsEnabled\":" + params.isAdsEnabled()));
+        assertion.assertTrue(responce.contains("\"freewheelNetworkID\":\"" + params.getFreewheelNetworkID() + "\""));
+        assertion.assertTrue(responce.contains("\"amazonEnabled\":" + params.isAmazonEnabled()));
+        assertion.assertTrue(responce.contains("\"timeSinceLastAd\":80000"));
+        assertion.assertAll();
     }
 
 

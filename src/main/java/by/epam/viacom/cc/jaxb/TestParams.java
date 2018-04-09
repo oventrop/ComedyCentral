@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType( name = "responseParams")
+@XmlType(name = "responseParams")
 @XmlRootElement
 public class TestParams {
 
