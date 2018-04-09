@@ -3,18 +3,22 @@ package by.epam.viacom.cc.jaxb;
 import javax.xml.bind.*;
 import java.io.*;
 
-public class JaxbBuilder {
+public class JaxbUtils {
 
-    public static void main (String [] args){
-        JaxbBuilder.buildXML();
-        JaxbBuilder.parseXML();
+    public static void main(String[] args) {
+
+        new JaxbUtils().buildXML();
+        new JaxbUtils().parseXML("TestParams.xml");
     }
 
 
-    public static void buildXML() {
+    public void buildXML() {
+
         TestParams test = new TestParams();
         test.setAdsEnabled(true);
-        test.setAdServer("ads.google.com");
+        test.setAdServer("freewheel");
+        test.setFreewheelNetworkID(82125);
+        test.setAmazonEnabled(false);
 
         try {
             JAXBContext context = JAXBContext.newInstance(TestParams.class);
@@ -28,14 +32,29 @@ public class JaxbBuilder {
         }
     }
 
-    public static void parseXML() {
+    public TestParams parseXML(String path) {
+        TestParams test = new TestParams();
+        try {
+            InputStream is = new FileInputStream(path);
+            JAXBContext context = JAXBContext.newInstance(TestParams.class);
+            Unmarshaller um = context.createUnmarshaller();
+            test = (TestParams) um.unmarshal(is);
+            System.out.println(test.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return test;
+    }
+
+    public static void parseHar() {
         try {
             InputStream is = new FileInputStream("TestParams.xml");
             JAXBContext context = JAXBContext.newInstance(TestParams.class);
             Unmarshaller um = context.createUnmarshaller();
             TestParams test = (TestParams) um.unmarshal(is);
             System.out.println(test.toString());
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
