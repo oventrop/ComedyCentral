@@ -20,7 +20,7 @@ public class ProxyTest {
     private WebDriver driver;
     private Har har;
     private BrowserMobProxy proxyServer;
-    private static final String GECKO_DRIVER = "D:/DATA/geckodriver.exe";
+    private static final String GECKO_DRIVER = "geckodriver";
     private static final String PLAYER_URL = "http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot";
 
     @BeforeClass(description = "start proxy server")
