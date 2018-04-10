@@ -1,5 +1,6 @@
 package by.epam.viacom.cc.utils;
 
+import io.qameta.allure.Attachment;
 import org.testng.*;
 
 import javax.imageio.ImageIO;
@@ -30,15 +31,23 @@ public class Listener implements ITestListener, ISuiteListener {
     }
 
     public void onTestFailure(ITestResult result) {
+        saveAttachment();
+    }
+
+    @Attachment(value = "Sample attachment", type = "image")
+    public File saveAttachment() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd, hh.mm ss");
+        File file = new File("screenshots/" + formatter.format(calendar.getTime()) + ".jpg");
         try {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd, hh.mm ss");
             BufferedImage image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            ImageIO.write(image, "jpg", new File("screenshots/"+formatter.format(calendar.getTime())+".jpg"));
+            ImageIO.write(image, "jpg", file);
         } catch (IOException | AWTException e) {
             e.printStackTrace();
         }
+        return file;
     }
+
 
     public void onTestSkipped(ITestResult result) {
 

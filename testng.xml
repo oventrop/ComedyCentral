@@ -10,24 +10,26 @@
         <class name="by.epam.viacom.cc.tests.SimpleTest"/>
     </classes>
 </test>
-    <test name="ChromeTest1">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="by.epam.viacom.cc.tests.SimpleTest"/>
-        </classes>
-    </test>
+
     <test name="FirefoxTest2">
         <parameter name="browser" value="firefox"/>
         <classes>
             <class name="by.epam.viacom.cc.tests.SimpleTest"/>
         </classes>
     </test>
-    <test name="ChromeTest2">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="by.epam.viacom.cc.tests.SimpleTest"/>
-        </classes>
-    </test>
+
+    <!--<test name="ChromeTest1">-->
+    <!--<parameter name="browser" value="chrome"/>-->
+    <!--<classes>-->
+    <!--<class name="by.epam.viacom.cc.tests.SimpleTest"/>-->
+    <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="ChromeTest2">-->
+        <!--<parameter name="browser" value="chrome"/>-->
+        <!--<classes>-->
+            <!--<class name="by.epam.viacom.cc.tests.SimpleTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
     <!--<test name="RewindTest">-->
         <!--<parameter name="browser" value="firefox"/>-->
         <!--<classes>-->
