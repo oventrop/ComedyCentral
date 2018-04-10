@@ -11,8 +11,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 public class DriverFactory {
 
     private static WebDriver driver;
-    private static final String GECKO_DRIVER = "geckodriver";
-    private static final String CHROME_DRIVER = "chromedriver";
+    private static final String GECKO_DRIVER = "/Users/denis_galieuski/Documents/Data/geckodriver";
+    private static final String CHROME_DRIVER = "/Users/denis_galieuski/Documents/Data/chromedriver";
 
     private DriverFactory() {}
 
@@ -36,8 +36,3 @@ public class DriverFactory {
         return driver;
     }
 }
-//    Поработай с JAXB. Создай сущность аля TestParams и хмл файл. Которые будут содержать параметры для проверки респонса media.mtvnservices.
-//        Типа
-//        "adServer": "freewheel",
-//        "adsEnabled": true,
-//        Штуки 3-4. Сущность должна передаваться входным параметром в тест.
