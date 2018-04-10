@@ -10,12 +10,20 @@ import org.testng.TestNG;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CLRunner {
+public class CLParser {
     @Argument
     private List<String> arguments = new ArrayList<String>();
 
     @Option(name = "-t", usage = "number of threads for test run")
     private static int threads = 1;
+
+    public static int getThreads() {
+        return threads;
+    }
+
+    public static String getBrowser() {
+        return browser;
+    }
 
     @Option(name = "-b", usage = "browser for test run")
     private static String browser = "firefox";
@@ -30,8 +38,5 @@ public class CLRunner {
             e.printStackTrace();
             return;
         }
-        TestNG tng = new TestNG();
-        tng.setXmlSuites(new TestSuite().filledXmlSuite(browser, threads));
-        tng.run();
     }
 }

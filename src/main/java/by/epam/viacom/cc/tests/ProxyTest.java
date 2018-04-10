@@ -27,7 +27,7 @@ public class ProxyTest {
     private BrowserMobProxy proxyServer;
     private static final String GECKO_DRIVER = "geckodriver";
     private static final String PLAYER_URL = "http://www.cc.com/video-clips/8pfw7w/tosh-0-twitter-reboot";
-   // private static final String TEST_PARAMS_XML = "TestPass1.xml";
+    // private static final String TEST_PARAMS_XML = "TestPass1.xml";
 
     @BeforeClass(description = "start proxy server")
     public void startServer() {
@@ -65,12 +65,12 @@ public class ProxyTest {
 //    }
 
     @Test(dataProvider = "XmlDataProvider", dataProviderClass = ProxyTestDataProvider.class)
-    public void proxyJaxbSampleTest(String xmlSuite) {
+    public void proxyJaxbSampleTest(TestParams params) {
         proxyServer.newHar("cc.com");
         driver.get(PLAYER_URL);
         har = proxyServer.getHar();
         String responce = "";
-        int status=0;
+        int status = 0;
 
         for (HarEntry entry : har.getLog().getEntries()) {
             if (entry.getRequest().getUrl().contains("http://media.mtvnservices.com/pmt/e1/access/index.html?uri")) {
@@ -79,8 +79,6 @@ public class ProxyTest {
                 break;
             }//add softAsserts, 4 xml suits, params out of main class, suit передать в сигнатуру тества
         }
-
-        TestParams params = new JaxbUtils().parseXML(xmlSuite);
 
         SoftAssert assertion = new SoftAssert();
         assertion.assertEquals(status, 200);

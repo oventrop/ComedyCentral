@@ -14,7 +14,6 @@ public class MainRunner {
         tng.run();
     }
 
-    //switched to MobileTest repo
 }
 
 

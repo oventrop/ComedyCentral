@@ -11,12 +11,13 @@ public class ProxyTestDataProvider {
 
     @DataProvider(name = "XmlDataProvider")
     public Object[][] getDataFromDataprovider() {
+
         return new Object[][]
                 {
-                        {TP1},
-                        {TP2},
-                        {TF1},
-                        {TF2}
+                        {new JaxbUtils().parseXML(TP1)},
+                        {new JaxbUtils().parseXML(TP2)},
+                        {new JaxbUtils().parseXML(TF1)},
+                        {new JaxbUtils().parseXML(TF2)}
 
                 };
     }
