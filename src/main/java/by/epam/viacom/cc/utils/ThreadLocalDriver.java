@@ -1,17 +1,18 @@
 package by.epam.viacom.cc.utils;
 
 
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 
 public class ThreadLocalDriver {
 
-    private static final ThreadLocal<WebDriver> THREAD = new ThreadLocal<>();
+    private static final ThreadLocal<AndroidDriver> THREAD = new ThreadLocal<>();
 
-    public static WebDriver getDriver() {
+    public static AndroidDriver getDriver() {
         return THREAD.get();
     }
 
-    public static void setWebDriver(WebDriver driver) {
+    public static void setWebDriver(AndroidDriver driver) {
         if (THREAD.get() == null) {
             THREAD.set(driver);
         }
