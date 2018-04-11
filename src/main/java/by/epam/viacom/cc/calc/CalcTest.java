@@ -21,8 +21,6 @@ public class CalcTest {
 
     AndroidDriver driver;
 
-
-
     @FindBy(id = "com.sec.android.app.popupcalculator:id/bt_02")
     WebElement two;
 
@@ -78,6 +76,4 @@ public class CalcTest {
         driver.quit();
         ThreadLocalDriver.removeDriverThread();
     }
-
-
 }
